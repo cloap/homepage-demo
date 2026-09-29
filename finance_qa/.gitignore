@@ -1,0 +1,16 @@
+# 大数据文件（不推仓库：年报 PDF、本地模型、临时产物）
+data/pdfs/
+models/
+data/chunks.json
+data/meta.json
+data/eval_results.json
+data/eval_report.txt
+data/index/embeddings.npy.bak
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Streamlit
+.streamlit/secrets.toml
