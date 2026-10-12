@@ -27,7 +27,8 @@ def tokenize(text):
 def main():
     with open(os.path.join(DATA_DIR, "chunks.json"), encoding="utf-8") as f:
         chunks = json.load(f)
-    texts = [c["text"] for c in chunks]
+    # 向量化时把「公司名 + 章节名」拼进文本（对齐PPT第25页：检索时才分得清是谁的数）
+    texts = [f"{c['company']}｜{c['section']}｜{c['text']}" for c in chunks]
     print(f"共 {len(chunks)} 块")
 
     # 1. BM25 索引

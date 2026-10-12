@@ -42,8 +42,8 @@ python 05_eval.py
 
 - 数据：巨潮资讯（cninfo.com.cn）12 家白酒公司 2025 年报
 - 提取：PyMuPDF（文字 + `find_tables` 表格按行列还原，独立成块）
-- 切块：正文 ~700 字/块，表格整块保留，带「公司、章节、页码」
-- 索引：BM25（rank_bm25）+ 向量（BAAI/bge-small-zh-v1.5，512 维）+ UMAP 语义地图
+- 切块：正文 800 字/块、重合 120 字，带「公司、章节、页码、块序号」四标签
+- 索引：BM25（rank_bm25）+ 向量（BAAI/bge-small-zh-v1.5，512 维，向量化拼入公司名+章节名）+ UMAP 语义地图
 - 检索：混合检索 + RRF 融合
 - 回答：DeepSeek（Anthropic 兼容 Messages API），答案带出处
 - 评测：召回与答案分开评价，跨公司题逐家取证
