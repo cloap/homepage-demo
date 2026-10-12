@@ -82,6 +82,16 @@ if query:
         else:
             q_coord = coords[chunk_idx].mean(axis=0)
 
+    # 生成回答（基于召回块，答案带出处）
+    with st.spinner("生成回答…"):
+        try:
+            from answer import generate_answer
+            st.markdown("#### 📝 回答")
+            st.markdown(generate_answer(query, results))
+            st.divider()
+        except Exception as e:
+            st.caption(f"回答生成不可用（.env 未配 DeepSeek key）：{e}")
+
     col1, col2 = st.columns([3, 2])
     with col1:
         st.markdown("#### 语义地图（金色菱形 = 问题，红色 = 召回块）")

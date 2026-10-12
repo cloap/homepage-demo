@@ -14,3 +14,8 @@ __pycache__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# 密钥与本地索引
+.env
+data/index/
+data/chunks.json

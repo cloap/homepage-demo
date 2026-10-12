@@ -53,29 +53,26 @@ def extract_pdf(pdf_path, name, code):
                 page_section = ln
                 break
 
-        # 表格：find_tables 还原
-        table_texts = []
+        meta = {"company": name, "code": code, "section": cur_section, "page": pno + 1}
+
+        # 表格：find_tables 还原为「行 | 列」，每个表格独立成块（不被正文切块打断/截断）
         try:
             for tbl in page.find_tables():
                 rows = tbl.extract()
                 if not rows:
                     continue
                 md = []
-                for r in rows[:50]:  # 限制行数避免过大
+                for r in rows[:60]:  # 限制行数
                     cells = [("" if c is None else str(c).replace("\n", " ").strip()) for c in r]
                     md.append(" | ".join(cells))
                 if md:
-                    table_texts.append("[表格] " + " ; ".join(md))
+                    # 每个表格一块，行列结构完整保留
+                    chunks.append({**meta, "text": "[表格]\n" + "\n".join(md)})
         except Exception:
             pass
 
-        # 把表格和正文都当作本页内容
-        page_text = text
-        if table_texts:
-            page_text += "\n" + "\n".join(table_texts)
-
-        meta = {"company": name, "code": code, "section": cur_section, "page": pno + 1}
-        chunks.extend(chunk_text(page_text, meta))
+        # 正文单独切块
+        chunks.extend(chunk_text(text, meta))
 
         if page_section:
             cur_section = page_section

@@ -48,6 +48,12 @@ def main():
     with open(os.path.join(INDEX_DIR, "chunks.json"), "w", encoding="utf-8") as f:
         json.dump(chunks, f, ensure_ascii=False, indent=1)
 
+    # 3. UMAP 降维（语义地图用，随块数变化需重建）
+    import umap
+    coords = umap.UMAP(n_components=2, metric="cosine", random_state=42).fit_transform(embeddings)
+    np.save(os.path.join(INDEX_DIR, "umap_coords.npy"), coords)
+    print(f"UMAP 降维完成，形状 {coords.shape}")
+
     print("索引全部保存到", INDEX_DIR)
 
 
