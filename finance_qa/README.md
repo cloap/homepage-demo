@@ -12,7 +12,8 @@ finance_qa/
 ├── retrieval.py        # 混合检索（BM25 + 向量 RRF 融合）
 ├── answer.py           # 基于召回块生成带出处回答（DeepSeek，Anthropic 兼容端点）
 ├── 04_app.py           # Streamlit 问答页面（语义地图 + 回答 + 召回块）
-├── 05_eval.py          # 10 道题评测：召回 + 实际回答（跨公司题逐家取证）
+├── 05_eval.py          # 10 道题评测
+├── 来源清单.md         # 12 家公司官方年报来源链接：召回 + 实际回答（跨公司题逐家取证）
 ├── gen_screenshot.py   # 生成问答页截图
 ├── gen_conclusion_pdf.py  # 生成一页结论 PDF
 ├── 评测记录.md         # 10 题逐题记录（召回块 + 实际回答 + 判定）
