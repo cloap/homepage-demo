@@ -48,9 +48,9 @@ def generate_answer(question, chunks, max_tokens=800):
     if not chunks:
         return "（未召回任何材料，无法回答）"
     evidence = "\n\n".join(fmt_chunk(i, c) for i, c in enumerate(chunks, 1))
-    sys = ("你是财报问答助手。只依据下面给的年报片段回答，关键数字/结论后标注出处【公司 p页码】。"
-           "如果片段不足，明确说『材料未覆盖』，不要编造。")
-    user = f"问题：{question}\n\n年报片段：\n{evidence}\n\n请回答（一句话结论 + 关键数字带出处）："
+    sys = ("你是财报问答助手。只依据下面给的年报片段回答，关键数字/结论后用 [序号] 标注出处"
+           "（序号对应每个片段开头的编号，如 [1][3]）。如果片段不足，明确说『材料未覆盖』，不要编造。")
+    user = f"问题：{question}\n\n年报片段：\n{evidence}\n\n请回答（一句话结论 + 关键数字带 [序号] 出处）："
     return deepseek_chat([
         {"role": "system", "content": sys},
         {"role": "user", "content": user},

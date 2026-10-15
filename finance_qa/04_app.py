@@ -86,7 +86,7 @@ if query:
     with st.spinner("生成回答…"):
         try:
             from answer import generate_answer
-            st.markdown("#### 📝 回答")
+            st.markdown("#### 📝 回答（数字为出处序号，见右侧「页码出处」）")
             st.markdown(generate_answer(query, results))
             st.divider()
         except Exception as e:
@@ -97,10 +97,9 @@ if query:
         st.markdown("#### 语义地图（金色菱形 = 问题，红色 = 召回块）")
         st.plotly_chart(build_map(highlight_idx=chunk_idx, q_coord=q_coord), use_container_width=True)
     with col2:
-        st.markdown(f"#### 检索结果（{len(results)} 块）")
+        st.markdown(f"#### 页码出处（{len(results)} 块，点击展开原文）")
         for i, r in enumerate(results, 1):
-            with st.container(border=True):
-                st.markdown(f"**#{i}** 🏢 {r['company']}（{r['code']}）· {r['section']} · 📍第{r['page']}页")
+            with st.expander(f"[{i}] 🏢 {r['company']}（{r['code']}）· {r['section']} · 📍第{r['page']}页"):
                 st.write(r["text"])
                 st.caption(f"得分 {r['score']}｜BM25 {r['bm25']}｜向量 {r['cos']}")
 
